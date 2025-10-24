@@ -25,7 +25,7 @@ Flutterで作成したレシピ管理アプリです。レシピの登録、編�
 
 ### 必要なもの
 
-- Flutter SDK 3.24.5以上
+- Flutter SDK（Stable channelの最新版推奨）
 - Dart SDK 3.9.2以上
 - Android Studio（Android開発用）
 - Xcode（iOS開発用、macOSのみ）
@@ -130,7 +130,7 @@ lib/
 
 ## 技術スタック
 
-- **Framework**: Flutter 3.24.5
+- **Framework**: Flutter (Stable channel)
 - **Language**: Dart 3.9.2
 - **UI**: Material Design 3
 - **CI/CD**: GitHub Actions

@@ -57,7 +57,7 @@ on:
    - Androidビルドに必要なJava 17をインストール
 
 3. **Flutterのセットアップ** (`subosito/flutter-action@v2`)
-   - Flutter SDK 3.24.5をインストール
+   - Flutter SDK（Stable channelの最新版）をインストール
 
 4. **依存関係の取得**
    - `flutter pub get`で必要なパッケージをダウンロード
@@ -154,7 +154,7 @@ push:
 
 ### Flutterバージョンの変更
 
-`flutter-version`を変更：
+特定のバージョンを指定する場合、`flutter-version`を追加：
 
 ```yaml
 - name: Set up Flutter
@@ -163,6 +163,8 @@ push:
     flutter-version: '3.27.0'  # 任意のバージョン
     channel: 'stable'
 ```
+
+**注意**: バージョンを指定しない場合は、Stable channelの最新版が自動的に使用されます（推奨）。
 
 ### APKの保存期間の変更
 
