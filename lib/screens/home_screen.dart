@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('レシピ一覧'),
-        backgroundColor: Colors.orange,
+        backgroundColor: const Color(0xFF4CAF50),
       ),
       body: Column(
         children: [
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       'レシピがありません\n+ボタンから追加してください',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      style: TextStyle(fontSize: 16, color: Color(0xFF333333)),
                     ),
                   )
                 : ListView.builder(
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _formatDate(recipe.createdAt),
                                   style: const TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey,
+                                    color: Color(0xFF666666),
                                   ),
                                 ),
                               ),
@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _addRecipe(result);
           }
         },
-        backgroundColor: Colors.orange,
+        backgroundColor: const Color(0xFF4CAF50),
         child: const Icon(Icons.add),
       ),
     );

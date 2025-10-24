@@ -125,7 +125,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_isEditing ? 'レシピ編集' : 'レシピ追加'),
-        backgroundColor: Colors.orange,
+        backgroundColor: const Color(0xFF4CAF50),
       ),
       body: Form(
         key: _formKey,
@@ -165,7 +165,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
                   label: Text(tag),
                   selected: _selectedTags.contains(tag),
                   onSelected: (_) => _toggleTag(tag),
-                  selectedColor: Colors.orange.shade200,
+                  selectedColor: const Color(0xFF4CAF50).withOpacity(0.3),
                 );
               }).toList(),
             ),
@@ -192,7 +192,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
                   icon: const Icon(Icons.add),
                   label: const Text('追加'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
+                    backgroundColor: const Color(0xFF4CAF50),
                   ),
                 ),
               ],
@@ -204,9 +204,9 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.orange.shade50,
+                  color: const Color(0xFF4CAF50).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.orange.shade200),
+                  border: Border.all(color: const Color(0xFF4CAF50).withOpacity(0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,7 +224,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
                           label: Text(tag),
                           deleteIcon: const Icon(Icons.close, size: 18),
                           onDeleted: () => _toggleTag(tag),
-                          backgroundColor: Colors.orange.shade100,
+                          backgroundColor: const Color(0xFF4CAF50).withOpacity(0.2),
                         );
                       }).toList(),
                     ),
@@ -310,7 +310,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
             ElevatedButton(
               onPressed: _saveRecipe,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: const Color(0xFF4CAF50),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 textStyle: const TextStyle(fontSize: 18),
               ),

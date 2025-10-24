@@ -15,7 +15,7 @@ class RecipeDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(recipe.title),
-        backgroundColor: Colors.orange,
+        backgroundColor: const Color(0xFF4CAF50),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -56,7 +56,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 children: recipe.tags.map((tag) {
                   return Chip(
                     label: Text(tag),
-                    backgroundColor: Colors.orange.shade100,
+                    backgroundColor: const Color(0xFF4CAF50).withOpacity(0.2),
                   );
                 }).toList(),
               ),
@@ -117,7 +117,7 @@ class RecipeDetailScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFFF5F5F5),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -127,7 +127,7 @@ class RecipeDetailScreen extends StatelessWidget {
                     '作成日: ${_formatDate(recipe.createdAt)}',
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.grey,
+                      color: Color(0xFF666666),
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -135,7 +135,7 @@ class RecipeDetailScreen extends StatelessWidget {
                     '更新日: ${_formatDate(recipe.updatedAt)}',
                     style: const TextStyle(
                       fontSize: 12,
-                      color: Colors.grey,
+                      color: Color(0xFF666666),
                     ),
                   ),
                 ],

@@ -1,0 +1,114 @@
+name: Android APK Build
+
+on:
+  # 手動トリガー
+  workflow_dispatch:
+    inputs:
+      build_mode:
+        description: 'ビルドモード'
+        required: true
+        default: 'release'
+        type: choice
+        options:
+          - release
+          - debug
+
+  # プッシュ時の自動ビルド（mainブランチとclaudeで始まるブランチ）
+  push:
+    branches:
+      - main
+      - 'claude/**'
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. リポジトリのチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Javaのセットアップ（Android開発に必要）
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # 3. Flutterのセットアップ
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: 'stable'
+          cache: true
+
+      # 4. Flutterバージョン確認
+      - name: Check Flutter version
+        run: flutter --version
+
+      # 5. 依存関係の取得
+      - name: Get dependencies
+        run: flutter pub get
+
+      # 6. ビルドモードの決定
+      - name: Set build mode
+        id: build_mode
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.build_mode }}" >> $GITHUB_OUTPUT
+          else
+            echo "mode=release" >> $GITHUB_OUTPUT
+          fi
+
+      # 7. APKのビルド
+      - name: Build APK
+        run: |
+          if [ "${{ steps.build_mode.outputs.mode }}" == "debug" ]; then
+            flutter build apk --debug
+          else
+            flutter build apk --release
+          fi
+
+      # 8. APKファイルの場所を確認
+      - name: List APK files
+        run: |
+          echo "=== ビルド済みAPKファイル ==="
+          ls -lh build/app/outputs/flutter-apk/
+
+      # 9. APKファイル名の決定（タイムスタンプ付き）
+      - name: Get APK filename
+        id: apk_name
+        run: |
+          TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+          MODE="${{ steps.build_mode.outputs.mode }}"
+          APK_NAME="recipe_app-${MODE}-${TIMESTAMP}.apk"
+          echo "name=${APK_NAME}" >> $GITHUB_OUTPUT
+          echo "timestamp=${TIMESTAMP}" >> $GITHUB_OUTPUT
+
+      # 10. APKファイルを配布用にリネーム
+      - name: Rename APK
+        run: |
+          MODE="${{ steps.build_mode.outputs.mode }}"
+          if [ "$MODE" == "debug" ]; then
+            cp build/app/outputs/flutter-apk/app-debug.apk ${{ steps.apk_name.outputs.name }}
+          else
+            cp build/app/outputs/flutter-apk/app-release.apk ${{ steps.apk_name.outputs.name }}
+          fi
+
+      # 11. Artifactsにアップロード
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-${{ steps.build_mode.outputs.mode }}-apk-${{ steps.apk_name.outputs.timestamp }}
+          path: ${{ steps.apk_name.outputs.name }}
+          retention-days: 30
+          compression-level: 0
+
+      # 12. ビルド完了メッセージ
+      - name: Build complete
+        run: |
+          echo "✅ APKビルドが完了しました！"
+          echo "📱 APK名: ${{ steps.apk_name.outputs.name }}"
+          echo "📦 Artifactsからダウンロードできます"
