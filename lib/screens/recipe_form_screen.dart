@@ -19,7 +19,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
   final _newTagController = TextEditingController();
 
   // よく使われるタグの例
-  final List<String> _availableTags = ['和食', '洋食', '中華', '簡単', 'ヘルシー', 'デザート'];
+  final List<String> _availableTags = ['和食', '洋食', '中華', '簡単', 'ヘルシー', 'デザート', 'タンパク質'];
 
   bool get _isEditing => widget.recipe != null;
 
