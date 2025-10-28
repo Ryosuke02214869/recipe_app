@@ -21,6 +21,30 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
   // よく使われるタグの例
   final List<String> _availableTags = ['和食', '洋食', '中華', '簡単', 'ヘルシー', 'デザート'];
 
+  // よく使う材料のリスト
+  final List<String> _commonIngredients = [
+    '玉ねぎ',
+    'にんじん',
+    'じゃがいも',
+    '豚肉',
+    '鶏肉',
+    '牛肉',
+    '卵',
+    '米',
+    'パスタ',
+    'トマト',
+    'にんにく',
+    '生姜',
+    '醤油',
+    'みりん',
+    '酒',
+    '砂糖',
+    '塩',
+    'コショウ',
+    'サラダ油',
+    'ごま油',
+  ];
+
   bool get _isEditing => widget.recipe != null;
 
   @override
@@ -88,6 +112,29 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
         _newTagController.clear();
       });
     }
+  }
+
+  void _selectCommonIngredient(String? ingredient) {
+    if (ingredient == null || ingredient.isEmpty) return;
+
+    setState(() {
+      // 最後の材料フィールドを探す
+      if (_ingredientControllers.isNotEmpty) {
+        final lastController = _ingredientControllers.last;
+        // 最後のフィールドが空なら、そこに入力
+        if (lastController.text.trim().isEmpty) {
+          lastController.text = ingredient;
+        } else {
+          // 最後のフィールドが埋まっている場合は、新しいフィールドを追加して入力
+          final newController = TextEditingController(text: ingredient);
+          _ingredientControllers.add(newController);
+        }
+      } else {
+        // 材料フィールドがない場合は新規作成
+        final newController = TextEditingController(text: ingredient);
+        _ingredientControllers.add(newController);
+      }
+    });
   }
 
   void _saveRecipe() {
@@ -250,6 +297,54 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
                   label: const Text('材料を追加'),
                 ),
               ],
+            ),
+            const SizedBox(height: 12),
+
+            // よく使う材料のドロップダウン
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF4CAF50).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: const Color(0xFF4CAF50).withOpacity(0.3)),
+              ),
+              child: Row(
+                children: [
+                  const Icon(
+                    Icons.kitchen,
+                    color: Color(0xFF4CAF50),
+                    size: 20,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'よく使う材料:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        hint: const Text(
+                          '選択してください',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        isExpanded: true,
+                        value: null,
+                        items: _commonIngredients.map((String ingredient) {
+                          return DropdownMenuItem<String>(
+                            value: ingredient,
+                            child: Text(ingredient),
+                          );
+                        }).toList(),
+                        onChanged: _selectCommonIngredient,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8),
 
