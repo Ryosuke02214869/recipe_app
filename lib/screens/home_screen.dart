@@ -100,7 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('レシピ一覧'),
         backgroundColor: const Color(0xFF4CAF50),
       ),
-      body: Column(
+      body: SafeArea(
+        child: Column(
         children: [
           // タグフィルター
           if (availableTags.isNotEmpty)
@@ -225,6 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
           ),
         ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

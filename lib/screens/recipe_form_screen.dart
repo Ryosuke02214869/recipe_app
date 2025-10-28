@@ -127,7 +127,8 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
         title: Text(_isEditing ? 'レシピ編集' : 'レシピ追加'),
         backgroundColor: const Color(0xFF4CAF50),
       ),
-      body: Form(
+      body: SafeArea(
+        child: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.all(16),
@@ -317,6 +318,7 @@ class _RecipeFormScreenState extends State<RecipeFormScreen> {
               child: Text(_isEditing ? '更新する' : '保存する'),
             ),
           ],
+        ),
         ),
       ),
     );
